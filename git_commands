@@ -1,0 +1,5 @@
+Comandos git
+
+git add .
+git commit -m "update x"
+git push origin
