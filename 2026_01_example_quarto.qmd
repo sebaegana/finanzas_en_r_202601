@@ -1,0 +1,134 @@
+---
+title: "VAR example"
+format: html
+editor: visual
+---
+
+# Explicación de qué es un VAR
+
+El Value at Risk (VaR), o Valor en Riesgo, es una métrica clave en finanzas que estima la **cantidad máxima de pérdida que se puede esperar en un horizonte de tiempo específico y con un nivel de confianza dado**. En otras palabras, te dice lo probable que sea perder una cierta cantidad de dinero en un período definido.
+
+Aquí te lo explico desglosado:
+
+## Conceptos Fundamentales:
+
+-   **Horizonte de Tiempo:** Es el período de tiempo para el cual se calcula el VaR. Por ejemplo, puede ser un día, una semana, un mes o incluso un año.
+-   **Nivel de Confianza:** Representa la probabilidad de que la pérdida real no exceda el valor del VaR. Los niveles de confianza más comunes son:
+    -   **95%:** Significa que hay un 5% de probabilidad de perder más que el valor del VaR.
+    -   **99%:** Significa que hay un 1% de probabilidad de perder más que el valor del VaR.
+-   **Valor del VaR:** Es la cantidad de pérdida que se estima con el horizonte de tiempo y el nivel de confianza dados.
+
+## Cómo se calcula (Existen diferentes métodos):
+
+El cálculo del VaR varía dependiendo de la complejidad del activo o cartera y los datos disponibles. Algunos métodos comunes son:
+
+-   **Método Histórico:** Se basa en la recopilación de datos históricos de fluctuaciones de precios del activo (u otros instrumentos financieros). Se calcula la desviación estándar de estas fluctuaciones y se utiliza para determinar un intervalo de confianza. Es un método simple pero puede ser poco preciso si las condiciones del mercado cambian significativamente.
+-   **Simulación de Monte Carlo:** Se simulan miles de escenarios posibles de precios del activo, basados en distribuciones de probabilidad que se asumen para el activo. Esta técnica es más compleja pero permite modelar una gama más amplia de escenarios y puede ser más precisa.
+-   **Modelos Paramétricos (VaR de Modelos):** Utilizan modelos matemáticos que asumen una distribución de probabilidad para los precios del activo. Ejemplos incluyen:
+    -   **GARCH (Generalized Autoregressive Conditional Heteroskedasticity):** Comúnmente utilizado para valorar las acciones y precios de los derivados de tasas de interés.
+    -   **Copulas:** Permiten modelar la dependencia entre diferentes activos.
+
+## Ejemplo:
+
+Imagina que un inversor quiere calcular el VaR de una cartera de acciones al final del día con un nivel de confianza del 95%. Después de aplicar un método (por ejemplo, el método histórico), el VaR se calcula como \$10,000. Esto significa que, con un 95% de probabilidad, la cartera no perderá más de \$10,000 ese día. Existe un 5% de probabilidad de que la pérdida sea mayor a \$10,000.
+
+## Limitaciones del VaR:
+
+-   **Dependencia de los datos:** La precisión del VaR depende de la calidad y cantidad de los datos utilizados y la adecuación del modelo.
+-   **No informa sobre la pérdida máxima:** Solo indica la probabilidad y el tamaño de la pérdida hasta cierto punto. Por encima de ese punto, el VaR no proporciona información útil.
+-   **Asume un entorno de mercado estable:** El VaR se basa en la asunción de que las condiciones del mercado permanecen relativamente constantes, lo cual puede no ser cierto en el mundo real.
+-   **Puede ser engañoso:** El VaR solo es una herramienta estadística y no garantiza la prevención de pérdidas.
+
+**En resumen, el VaR es una herramienta útil para la gestión de riesgos, pero es importante entender sus limitaciones y utilizarlo junto con otras métricas de riesgo.**
+
+**¿Quieres que profundicemos en alguno de estos aspectos, como:**
+
+-   Diferentes métodos de cálculo del VaR?
+-   Cómo interpretar el VaR en diferentes contextos (por ejemplo, para una cartera de acciones, un banco, etc.)?
+-   Cómo se relaciona el VaR con otros conceptos de gestión de riesgos como la pérdida máxima esperada (Expected Shortfall)?
+
+![](https://upload.wikimedia.org/wikipedia/commons/6/64/VaR_diagram.JPG)
+
+# Ejemplo aplicado de VAR
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(PerformanceAnalytics)
+library(tidyquant)
+library(tseries)
+library(tidyverse)
+
+symbol_name <<- c("AAPL", "GOOG", "AMZN", "F", "A", "TQQQ") # try to put Your tickers!!
+vahy <<- c(0.2,0.2,0.2,0.2,0.1,0.1)
+FROM <<- "2020-01-01" # change to Your dates!!!
+TO <<- "2022-12-31"
+
+# preparing one table in common for all the downloaded tickers - You can change
+for (i in 1:length(symbol_name)) {
+prac <<- Ad(getSymbols(symbol_name[i], from = FROM, to = TO,auto.assign=FALSE))
+if (i==1) {
+price <<-prac
+} else{
+price <<- merge(price,prac)
+}
+}
+rm(prac) # prac is just temporary variable to remove
+colnames(price) <- symbol_name #puting the names of the shares
+
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+return_a <- CalculateReturns(price, method="log")
+#hist(return_a$AAPL)
+# next cycle imputes the missing data by the variable medians
+for(i in 1:dim(return_a)[2]){
+return_a[,i][is.na(return_a[,i])] <- median(return_a[,i],na.rm = TRUE)
+}
+
+return2_a <- return_a[-1,]
+```
+
+Se deja a continuación el resultado del VAR al 5% calculado por método Gausiano.
+
+```{r, echo=FALSE}
+Qh <- VaR(return2_a[,1], p=0.95, method="gaussian")
+Qh
+```
+Para efectos de comparación podemos mirar también el VAR al 5% calculado por método historico
+
+```{r, echo=FALSE}
+Qv <<- VaR(return2_a[,1], p=0.95, method="historical")
+Qv
+```
+
+Por lo tanto, para AAPL, el VaR histórico al 5% es −3,75%, lo que indica que, con un 95% de confianza, la pérdida en el período analizado no superará el 3,75%; solo en el 5% de los peores escenarios históricos la caída sería mayor a este nivel.
+
+En términos graficos:
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Serie de retornos (AAPL)
+df_aapl <- tibble(
+  date = index(return2_a),
+  ret  = as.numeric(return2_a[, "AAPL"])
+)
+
+ggplot(df_aapl, aes(x = date, y = ret)) +
+  geom_line() +
+  geom_hline(yintercept = as.numeric(Qh), linetype = "dashed") +
+  geom_hline(yintercept = as.numeric(Qv), linetype = "solid") +
+  labs(
+    title = "Retornos logarítmicos de AAPL y VaR al 5%",
+    x = NULL,
+    y = "Retorno",
+    caption = paste0(
+      "VaR 5% Gaussiano = ", round(as.numeric(Qh), 6),
+      " | VaR 5% Histórico = ", round(as.numeric(Qv), 6)
+    )
+  )
+```
+
+
+
+
