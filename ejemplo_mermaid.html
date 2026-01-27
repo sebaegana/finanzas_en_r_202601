@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>VAR example</title>
+<title>Untitled</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,17 +23,20 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="2026_01_example_quarto_files/libs/clipboard/clipboard.min.js"></script>
-<script src="2026_01_example_quarto_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="2026_01_example_quarto_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="2026_01_example_quarto_files/libs/quarto-html/popper.min.js"></script>
-<script src="2026_01_example_quarto_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="2026_01_example_quarto_files/libs/quarto-html/anchor.min.js"></script>
-<link href="2026_01_example_quarto_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="2026_01_example_quarto_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="2026_01_example_quarto_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="2026_01_example_quarto_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="2026_01_example_quarto_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="ejemplo_mermaid_files/libs/clipboard/clipboard.min.js"></script>
+<script src="ejemplo_mermaid_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="ejemplo_mermaid_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="ejemplo_mermaid_files/libs/quarto-html/popper.min.js"></script>
+<script src="ejemplo_mermaid_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="ejemplo_mermaid_files/libs/quarto-html/anchor.min.js"></script>
+<link href="ejemplo_mermaid_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="ejemplo_mermaid_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="ejemplo_mermaid_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="ejemplo_mermaid_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="ejemplo_mermaid_files/libs/bootstrap/bootstrap-bb462d781dde1847d9e3ccf7736099dd.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="ejemplo_mermaid_files/libs/quarto-diagram/mermaid.min.js"></script>
+<script src="ejemplo_mermaid_files/libs/quarto-diagram/mermaid-init.js"></script>
+<link href="ejemplo_mermaid_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -46,7 +49,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">VAR example</h1>
+<h1 class="title">Untitled</h1>
 </div>
 
 
@@ -63,89 +66,75 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="explicación-de-qué-es-un-var" class="level1">
-<h1>Explicación de qué es un VAR</h1>
-<p>El Value at Risk (VaR), o Valor en Riesgo, es una métrica clave en finanzas que estima la <strong>cantidad máxima de pérdida que se puede esperar en un horizonte de tiempo específico y con un nivel de confianza dado</strong>. En otras palabras, te dice lo probable que sea perder una cierta cantidad de dinero en un período definido.</p>
-<p>Aquí te lo explico desglosado:</p>
-<section id="conceptos-fundamentales" class="level2">
-<h2 class="anchored" data-anchor-id="conceptos-fundamentales">Conceptos Fundamentales:</h2>
-<ul>
-<li><strong>Horizonte de Tiempo:</strong> Es el período de tiempo para el cual se calcula el VaR. Por ejemplo, puede ser un día, una semana, un mes o incluso un año.</li>
-<li><strong>Nivel de Confianza:</strong> Representa la probabilidad de que la pérdida real no exceda el valor del VaR. Los niveles de confianza más comunes son:
-<ul>
-<li><strong>95%:</strong> Significa que hay un 5% de probabilidad de perder más que el valor del VaR.</li>
-<li><strong>99%:</strong> Significa que hay un 1% de probabilidad de perder más que el valor del VaR.</li>
-</ul></li>
-<li><strong>Valor del VaR:</strong> Es la cantidad de pérdida que se estima con el horizonte de tiempo y el nivel de confianza dados.</li>
-</ul>
-</section>
-<section id="cómo-se-calcula-existen-diferentes-métodos" class="level2">
-<h2 class="anchored" data-anchor-id="cómo-se-calcula-existen-diferentes-métodos">Cómo se calcula (Existen diferentes métodos):</h2>
-<p>El cálculo del VaR varía dependiendo de la complejidad del activo o cartera y los datos disponibles. Algunos métodos comunes son:</p>
-<ul>
-<li><strong>Método Histórico:</strong> Se basa en la recopilación de datos históricos de fluctuaciones de precios del activo (u otros instrumentos financieros). Se calcula la desviación estándar de estas fluctuaciones y se utiliza para determinar un intervalo de confianza. Es un método simple pero puede ser poco preciso si las condiciones del mercado cambian significativamente.</li>
-<li><strong>Simulación de Monte Carlo:</strong> Se simulan miles de escenarios posibles de precios del activo, basados en distribuciones de probabilidad que se asumen para el activo. Esta técnica es más compleja pero permite modelar una gama más amplia de escenarios y puede ser más precisa.</li>
-<li><strong>Modelos Paramétricos (VaR de Modelos):</strong> Utilizan modelos matemáticos que asumen una distribución de probabilidad para los precios del activo. Ejemplos incluyen:
-<ul>
-<li><strong>GARCH (Generalized Autoregressive Conditional Heteroskedasticity):</strong> Comúnmente utilizado para valorar las acciones y precios de los derivados de tasas de interés.</li>
-<li><strong>Copulas:</strong> Permiten modelar la dependencia entre diferentes activos.</li>
-</ul></li>
-</ul>
-</section>
-<section id="ejemplo" class="level2">
-<h2 class="anchored" data-anchor-id="ejemplo">Ejemplo:</h2>
-<p>Imagina que un inversor quiere calcular el VaR de una cartera de acciones al final del día con un nivel de confianza del 95%. Después de aplicar un método (por ejemplo, el método histórico), el VaR se calcula como $10,000. Esto significa que, con un 95% de probabilidad, la cartera no perderá más de $10,000 ese día. Existe un 5% de probabilidad de que la pérdida sea mayor a $10,000.</p>
-</section>
-<section id="limitaciones-del-var" class="level2">
-<h2 class="anchored" data-anchor-id="limitaciones-del-var">Limitaciones del VaR:</h2>
-<ul>
-<li><strong>Dependencia de los datos:</strong> La precisión del VaR depende de la calidad y cantidad de los datos utilizados y la adecuación del modelo.</li>
-<li><strong>No informa sobre la pérdida máxima:</strong> Solo indica la probabilidad y el tamaño de la pérdida hasta cierto punto. Por encima de ese punto, el VaR no proporciona información útil.</li>
-<li><strong>Asume un entorno de mercado estable:</strong> El VaR se basa en la asunción de que las condiciones del mercado permanecen relativamente constantes, lo cual puede no ser cierto en el mundo real.</li>
-<li><strong>Puede ser engañoso:</strong> El VaR solo es una herramienta estadística y no garantiza la prevención de pérdidas.</li>
-</ul>
-<p><strong>En resumen, el VaR es una herramienta útil para la gestión de riesgos, pero es importante entender sus limitaciones y utilizarlo junto con otras métricas de riesgo.</strong></p>
-<p><strong>¿Quieres que profundicemos en alguno de estos aspectos, como:</strong></p>
-<ul>
-<li>Diferentes métodos de cálculo del VaR?</li>
-<li>Cómo interpretar el VaR en diferentes contextos (por ejemplo, para una cartera de acciones, un banco, etc.)?</li>
-<li>Cómo se relaciona el VaR con otros conceptos de gestión de riesgos como la pérdida máxima esperada (Expected Shortfall)?</li>
-</ul>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/6/64/VaR_diagram.JPG" class="img-fluid"></p>
-</section>
-</section>
-<section id="ejemplo-aplicado-de-var" class="level1">
-<h1>Ejemplo aplicado de VAR</h1>
-<p>Se deja a continuación el resultado del VAR al 5% calculado por método Gausiano.</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>           AAPL
-VaR -0.03747265</code></pre>
-</div>
-</div>
-<p>Para efectos de comparación podemos mirar también el VAR al 5% calculado por método historico</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>           AAPL
-VaR -0.03546503</code></pre>
-</div>
-</div>
-<p>Por lo tanto, para AAPL, el VaR histórico al 5% es −3,75%, lo que indica que, con un 95% de confianza, la pérdida en el período analizado no superará el 3,75%; solo en el 5% de los peores escenarios históricos la caída sería mayor a este nivel.</p>
-<p>En términos graficos:</p>
-<div class="cell">
+<section id="quarto" class="level2">
+<h2 class="anchored" data-anchor-id="quarto">Quarto</h2>
+<div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
-<figure class="figure">
-<p><img src="2026_01_example_quarto_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+    A[Inicio] --&gt; B[Leer datos]
+    B --&gt; C{¿Datos válidos?}
+    C -- Sí --&gt; D[Procesar datos]
+    C -- No --&gt; E[Mostrar error]
+    D --&gt; F[Guardar resultados]
+    E --&gt; F
+    F --&gt; G[Fin]
+
+</pre>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
-<hr>
-<section id="chunk-que-crea-el-texto-automáticamente-con-tus-qh-y-qv" class="level2">
-<h2 class="anchored" data-anchor-id="chunk-que-crea-el-texto-automáticamente-con-tus-qh-y-qv">2) Chunk que crea el texto automáticamente (con tus <code>Qh</code> y <code>Qv</code>)</h2>
-<p>Para el activo AAPL, el VaR al 5% calculado mediante el método Gaussiano es de -3.75%, ligeramente más adverso que el VaR Histórico de -3.55%, indicando una mayor estimación de pérdida bajo supuestos gaussianos. Para el activo AAPL, el VaR al 5% calculado mediante el método Gaussiano es de -3.75%, ligeramente más adverso que el VaR Histórico de -3.55%, indicando una mayor estimación de pérdida bajo supuestos gaussianos.</p>
-</section>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">sequenceDiagram
+    participant Usuario
+    participant App
+    participant BaseDatos
+
+    Usuario-&gt;&gt;App: Envía solicitud
+    App-&gt;&gt;BaseDatos: Consulta datos
+    BaseDatos--&gt;&gt;App: Respuesta
+    App--&gt;&gt;Usuario: Muestra resultado
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[(Base de Datos Transaccional)]
+    B[(Data Warehouse)]
+    C[(Data Mart Ventas)]
+    D[(Data Mart Clientes)]
+    E[(Modelo Analítico)]
+    F[(Dashboard BI)]
+
+    A --&gt;|ETL / ELT| B
+    B --&gt; C
+    B --&gt; D
+    C --&gt; E
+    D --&gt; E
+    E --&gt; F
+
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
 </section>
 
 </main>

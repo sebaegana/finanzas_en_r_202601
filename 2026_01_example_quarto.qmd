@@ -129,6 +129,50 @@ ggplot(df_aapl, aes(x = date, y = ret)) +
   )
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(ellmer)
+library(glue)
+library(knitr)
+
+# (Recomendado) define tu API key como variable de entorno fuera del documento:
+Sys.setenv(OPENAI_API_KEY = "XXXX")
+
+chat <- chat_openai(
+  model = "gpt-4.1-mini",
+  system_prompt = "Escribe en español, tono formal y conciso para un informe financiero (1-2 frases)."
+)
+```
+
+
+
+---
+
+## 2) Chunk que crea el texto automáticamente (con tus `Qh` y `Qv`)
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE, results='asis'}
+# Asegúrate de que ya existen: Qh, Qv y el ticker (AAPL en tu ejemplo)
+ticker <- "AAPL"
+
+var_gauss <- as.numeric(Qh)
+var_hist  <- as.numeric(Qv)
+
+prompt <- glue(
+"Genera un texto breve para informe.
+Activo: {ticker}.
+VaR 5% Gaussiano: {round(var_gauss, 6)} (equivale a {round(100*var_gauss, 2)}%).
+VaR 5% Histórico: {round(var_hist, 6)} (equivale a {round(100*var_hist, 2)}%).
+Instrucciones: 1-2 frases, sin teoría, solo interpretación del valor y comparación."
+)
+
+```
+
+
+```{r, results='asis', echo=FALSE, message=FALSE, warning=FALSE, cache=TRUE}
+
+texto_var <- chat$chat(prompt)
+
+texto_var
+```
 
 
 

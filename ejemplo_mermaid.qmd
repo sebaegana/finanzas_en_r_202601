@@ -1,0 +1,53 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+## Quarto
+
+```{mermaid}
+flowchart TD
+    A[Inicio] --> B[Leer datos]
+    B --> C{¿Datos válidos?}
+    C -- Sí --> D[Procesar datos]
+    C -- No --> E[Mostrar error]
+    D --> F[Guardar resultados]
+    E --> F
+    F --> G[Fin]
+
+```
+
+
+```{mermaid}
+sequenceDiagram
+    participant Usuario
+    participant App
+    participant BaseDatos
+
+    Usuario->>App: Envía solicitud
+    App->>BaseDatos: Consulta datos
+    BaseDatos-->>App: Respuesta
+    App-->>Usuario: Muestra resultado
+
+```
+
+
+```{mermaid}
+flowchart LR
+    A[(Base de Datos Transaccional)]
+    B[(Data Warehouse)]
+    C[(Data Mart Ventas)]
+    D[(Data Mart Clientes)]
+    E[(Modelo Analítico)]
+    F[(Dashboard BI)]
+
+    A -->|ETL / ELT| B
+    B --> C
+    B --> D
+    C --> E
+    D --> E
+    E --> F
+
+```
+
