@@ -1,0 +1,27 @@
+---
+title: "ejemplo_01"
+format: docx
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| echo: true
+
+library(tidyverse)
+
+smaller <- diamonds |>  
+  filter(carat <= 2.5)
+
+```
+
+```{r}
+#| label: plot-smaller-diamonds
+#| echo: false
+
+
+smaller |>
+ggplot(aes(x = carat)) +
+geom_freqpoly(binwidth = 0.01)
+
+```

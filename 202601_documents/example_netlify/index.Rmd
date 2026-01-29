@@ -1,0 +1,168 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(gapminder)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+# app.R
+library(shiny)
+library(dplyr)
+library(gapminder)
+library(plotly)
+library(DT)
+
+ui <- fluidPage(
+  titlePanel("Gapminder: gdpPercap interactivo (Plotly + Shiny)"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput(
+        "country", "País",
+        choices = sort(unique(gapminder$country)),
+        selected = "Chile"
+      ),
+      sliderInput(
+        "years", "Rango de años",
+        min = min(gapminder$year),
+        max = max(gapminder$year),
+        value = c(1952, 2007),
+        step = 5,
+        sep = ""
+      ),
+      checkboxGroupInput(
+        "mode", "Mostrar",
+        choices = c("Línea" = "lines", "Puntos" = "markers"),
+        selected = c("lines", "markers"),
+        inline = TRUE
+      ),
+      checkboxInput("log_y", "Escala log en Y", value = FALSE)
+    ),
+    mainPanel(
+      fluidRow(
+        column(
+          4,
+          wellPanel(
+            h4("KPI"),
+            textOutput("kpi_text")
+          )
+        ),
+        column(
+          8,
+          plotlyOutput("p", height = "420px")
+        )
+      ),
+      hr(),
+      h4("Datos filtrados"),
+      DTOutput("tbl")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+
+  df_filtered <- reactive({
+    gapminder %>%
+      filter(
+        country == input$country,
+        year >= input$years[1],
+        year <= input$years[2]
+      )
+  })
+
+  output$kpi_text <- renderText({
+    df <- df_filtered()
+    if (nrow(df) == 0) return("Sin datos en el rango seleccionado.")
+    paste0(
+      "Promedio gdpPercap (", input$years[1], "-", input$years[2], "): ",
+      round(mean(df$gdpPercap), 2)
+    )
+  })
+
+  output$p <- renderPlotly({
+    df <- df_filtered()
+    validate(need(nrow(df) > 0, "No hay datos para esa selección."))
+
+    mode <- paste(input$mode, collapse = "+")
+    if (mode == "") mode <- "lines+markers"  # fallback
+
+    p <- plot_ly(
+      data = df,
+      x = ~year,
+      y = ~gdpPercap,
+      type = "scatter",
+      mode = mode,
+      line = list(width = 3),
+      marker = list(size = 7),
+      hovertemplate = paste(
+        "<b>%{x}</b><br>",
+        "gdpPercap: %{y:,.2f}<extra></extra>"
+      )
+    ) %>%
+      layout(
+        title = paste("PIB per cápita -", input$country),
+        xaxis = list(title = "Año"),
+        yaxis = list(title = "gdpPercap"),
+        hovermode = "x unified"
+      )
+
+    if (isTRUE(input$log_y)) {
+      p <- p %>% layout(yaxis = list(type = "log", title = "gdpPercap (log)"))
+    }
+
+    p
+  })
+
+  output$tbl <- renderDT({
+    df_filtered() %>%
+      select(country, year, gdpPercap, lifeExp, pop) %>%
+      datatable(
+        options = list(pageLength = 10, scrollX = TRUE),
+        rownames = FALSE
+      )
+  })
+}
+
+shinyApp(ui, server)
+
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+valueBox(
+  value = round(
+    mean(gapminder$lifeExp[gapminder$country == "Chile"]),
+    1
+  ),
+  caption = "Esperanza de vida promedio (Chile)",
+  icon = "fa-heart",
+  color = "success"
+)
+```
+
+### Chart C
+
+```{r}
+gapminder %>%
+  filter(continent == "Americas", year == 2007) %>%
+  select(country, lifeExp, gdpPercap) %>%
+  arrange(desc(gdpPercap)) %>%
+  head(10)
+```
+

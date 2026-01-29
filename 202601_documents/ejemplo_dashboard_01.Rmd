@@ -1,0 +1,55 @@
+---
+title: "Untitled"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(gapminder)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+gapminder %>%
+  filter(country == "Chile") %>%
+  ggplot(aes(year, gdpPercap)) +
+  geom_line(color = "steelblue", linewidth = 1.2) +
+  geom_point() +
+  theme_minimal()
+```
+
+Column {data-width=350}
+-----------------------------------------------------------------------
+
+### Chart B
+
+```{r}
+valueBox(
+  value = round(
+    mean(gapminder$lifeExp[gapminder$country == "Chile"]),
+    1
+  ),
+  caption = "Esperanza de vida promedio (Chile)",
+  icon = "fa-heart",
+  color = "success"
+)
+```
+
+### Chart C
+
+```{r}
+gapminder %>%
+  filter(continent == "Americas", year == 2007) %>%
+  select(country, lifeExp, gdpPercap) %>%
+  arrange(desc(gdpPercap)) %>%
+  head(10)
+```
+
