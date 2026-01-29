@@ -1,0 +1,34 @@
+---
+title: "Opciones"
+format: html
+editor: visual
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+# Quarto
+
+Así se ve un opción:
+
+```{r}
+# Set parameters
+strike_price <- 50
+stock_prices <- seq(from = 30, to = 70, by = 1)
+# Calculate the payoff
+payoff <- pmax(stock_prices - strike_price, 0)
+# Create a dataframe
+
+option_data <- data.frame(StockPrice = stock_prices, Payoff = payoff)
+# Plotting the call option payoff
+option_plot <- ggplot(option_data, aes(x = StockPrice, y = Payoff)) +
+  geom_line(color = "blue", linewidth = 1) +
+  labs(title = "Call Option Payoff", x = "Stock Price at Expiration", y = "Payoff") +
+  theme_minimal()
+
+print(option_plot)
+```
+
+
+
