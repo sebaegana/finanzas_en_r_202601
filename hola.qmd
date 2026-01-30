@@ -1,0 +1,22 @@
+---
+title: "Untitled"
+format: html
+editor: visual
+---
+
+# Quarto
+
+```{mermaid}
+flowchart LR
+    Ground["GROUND"]
+
+    A["A<br/>Nose Landing Gear"] --> Ground
+    B["B<br/>Main Landing Gear"] --> Ground
+    C["C<br/>Engine Nacelle"] --> Ground
+    D["D<br/>Inboard Flap"] --> Ground
+    E["E<br/>Mid Wing"] --> Ground
+    F["F<br/>Outboard Wing"] --> Ground
+    G["G<br/>Wing Tip"] --> Ground
+```
+
+
